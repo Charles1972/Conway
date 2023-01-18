@@ -1,7 +1,22 @@
 <div class="main-container">
-  <button (click)="startStop()">{{runStatus ? 'Stop' : 'Start'}}</button>
-  <div class="mt-10 ">
-    <grid (onRunStatusChanged)="onRunStatusChanged($event)"></grid>
+  <div class="commands">
+    <button class="btn {{runStatus ? 'btn-secondary' : 'btn-primary'}} medium"
+            (click)="startStop()">{{runStatus ? 'Stop' : 'Start'}}</button>
+    <button class="btn btn-warning medium" [disabled]="runStatus" [ngClass]="{'btn-disabled': runStatus}"
+            (click)="clearAll()">Clear All</button>
+    <button class="btn btn-secondary medium" [disabled]="runStatus" [ngClass]="{'btn-disabled': runStatus}"
+            (click)="randomize()">Randomize</button>
+    <button class="btn {{designEnabled ? 'btn-secondary' : 'btn-success'}} medium"
+            [disabled]="runStatus" [ngClass]="{'btn-disabled': runStatus}"
+            (click)="designEnabled = !designEnabled">{{designEnabled ? 'Disable Design' : 'Enable Design'}}</button>
+    <div class="slider">
+      <label for="default-range">Generations per Seconds</label>
+      <input id="default-range" type="range" value="50">
+    </div>
   </div>
 
+  <div class="grid-component-container">
+    <grid [designEnabled]="designEnabled" [interval]="interval"
+          (onRunStatusChanged)="onRunStatusChanged($event)"></grid>
+  </div>
 </div>

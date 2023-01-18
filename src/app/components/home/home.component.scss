@@ -1,3 +1,39 @@
 .main-container {
-  @apply container mx-auto;
+  @apply container mx-auto mt-10;
+
+  .commands {
+    @apply grid grid-cols-3 sm:grid-cols-6 gap-x-4 gap-y-2;
+
+    button {
+      @apply col-span-6;
+    }
+
+    .big {
+      @apply sm:col-span-3;
+    }
+
+    .medium {
+      @apply sm:col-span-2;
+    }
+
+    .small {
+      @apply sm:col-span-1;
+    }
+
+    .slider {
+      @apply col-span-6 sm:col-span-4;
+
+      label {
+        @apply block mb-2 text-sm font-medium text-gray-900;
+      }
+
+      input {
+        @apply w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer;
+      }
+    }
+  }
+
+  .grid-component-container {
+    @apply mt-4;
+  }
 }

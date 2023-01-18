@@ -1,4 +1,8 @@
 .grid-container {
-  height: 80vh;
-  //@apply rounded-xl border border-gray-400 bg-gray-200;
+  @apply rounded-xl border border-gray-400;
+
+  canvas {
+    @apply p-2;
+    @apply h-[55vh] sm:h-[75vh];
+  }
 }
