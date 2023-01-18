@@ -1,0 +1,7 @@
+<div class="main-container">
+  <button (click)="startStop()">{{runStatus ? 'Stop' : 'Start'}}</button>
+  <div class="mt-10 ">
+    <grid (onRunStatusChanged)="onRunStatusChanged($event)"></grid>
+  </div>
+
+</div>
