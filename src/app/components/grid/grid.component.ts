@@ -10,7 +10,7 @@ export class GridComponent implements OnInit {
   @Input() onColor: string = 'pink';
   @Input() offColor: string = 'white';
   @Input() cellSize: number = 10;
-  @Input() interval: number = 1000;
+  @Input() interval: number = 100;
 
   @Output() onRunStatusChanged = new EventEmitter<boolean>();
 
@@ -25,6 +25,7 @@ export class GridComponent implements OnInit {
 
   ngOnInit(): void {
     this.setCellsRowsAndColumns();
+    this.randomizePattern();
   }
 
   setCellsRowsAndColumns() {
@@ -47,16 +48,20 @@ export class GridComponent implements OnInit {
     }
 
     console.log(this.rows, this.columns, this.cells)
-
-    this.setCanvas();
   }
 
   randomizePattern() {
-    for(let r = 0; r < this.rows; r++) {
-      for(let c = 0; c < this.columns; c++) {
-        this.cells[r][c].status = (Math.random() > 0.5);
-      }
-    }
+    // for(let r = 0; r < this.rows; r++) {
+    //   for(let c = 0; c < this.columns; c++) {
+    //     this.cells[r][c].status = (Math.random() < 0.1);
+    //   }
+    // }
+
+    this.cells[3][3].status = true;
+    this.cells[4][3].status = true;
+    this.cells[5][3].status = true;
+
+    this.drawCells();
   }
 
   startStop(start: boolean = true) {
@@ -65,15 +70,12 @@ export class GridComponent implements OnInit {
       this.loopId = setInterval(()=> this.updateGrid(), this.interval);
     }
     else {
+      console.log(this.rows, this.columns, this.cells)
       clearInterval(this.loopId);
     }
 
     this.runStatus = !this.runStatus;
     this.onRunStatusChanged.emit(this.runStatus);
-  }
-
-  private setCanvas() {
-
   }
 
   private updateGrid() {
@@ -106,8 +108,26 @@ export class GridComponent implements OnInit {
 
   private setNewCellStatus(row: number, col: number) {
     let cell = this.cells[row][col];
+    let neighboursCount: number = 0;
 
+    neighboursCount += this.getNeighborsStatusValue(row - 1, col - 1);
+    neighboursCount += this.getNeighborsStatusValue(row - 1, col);
+    neighboursCount += this.getNeighborsStatusValue(row - 1, col + 1);
+    neighboursCount += this.getNeighborsStatusValue(row + 1, col - 1);
+    neighboursCount += this.getNeighborsStatusValue(row + 1, col);
+    neighboursCount += this.getNeighborsStatusValue(row + 1, col + 1);
+    neighboursCount += this.getNeighborsStatusValue(row, col - 1);
+    neighboursCount += this.getNeighborsStatusValue(row, col + 1);
+
+    cell.status = (cell.status && (neighboursCount >= 2 || neighboursCount <= 3)) || (!cell.status && neighboursCount == 3);
+    // console.log('neighboursCount, cell.status',neighboursCount, cell.status)
   }
 
-  
+  private getNeighborsStatusValue(row: number, col: number) {
+    if (row > -1 && row < this.rows && col > -1 && col < this.columns) {
+      return this.cells[row][col].status ? 1 : 0;
+    }
+
+    return 0;
+  }
 }
