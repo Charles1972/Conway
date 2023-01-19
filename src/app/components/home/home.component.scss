@@ -1,5 +1,9 @@
 .main-container {
-  @apply container mx-auto mt-10;
+  @apply container mx-auto mt-5;
+
+  .title {
+    @apply font-semibold text-xl sm:text-6xl text-center mb-3 sm:mb-5;
+  }
 
   .commands {
     @apply grid grid-cols-3 sm:grid-cols-6 gap-x-4 gap-y-2;
@@ -20,15 +24,28 @@
       @apply sm:col-span-1;
     }
 
-    .slider {
+    .other {
       @apply col-span-6 sm:col-span-4;
+      @apply grid grid-cols-3;
 
-      label {
-        @apply block mb-2 text-sm font-medium text-gray-900;
+      .slider {
+        @apply col-span-2;
+
+        label {
+          @apply block mb-0 text-sm font-medium text-gray-900;
+        }
+
+        input {
+          @apply w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer;
+        }
       }
 
-      input {
-        @apply w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer;
+      .chkBox {
+        @apply col-span-1 pl-6 sm:pl-10;
+
+        label {
+          @apply mt-1;
+        }
       }
     }
   }

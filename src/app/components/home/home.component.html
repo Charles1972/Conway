@@ -1,4 +1,5 @@
 <div class="main-container">
+  <div class="title">Conway's Game of Life</div>
   <div class="commands">
     <button class="btn {{runStatus ? 'btn-secondary' : 'btn-primary'}} medium"
             (click)="startStop()">{{runStatus ? 'Stop' : 'Start'}}</button>
@@ -9,14 +10,24 @@
     <button class="btn {{designEnabled ? 'btn-secondary' : 'btn-success'}} medium"
             [disabled]="runStatus" [ngClass]="{'btn-disabled': runStatus}"
             (click)="designEnabled = !designEnabled">{{designEnabled ? 'Disable Design' : 'Enable Design'}}</button>
-    <div class="slider">
-      <label for="default-range">Generations per Seconds</label>
-      <input id="default-range" type="range" value="50">
+    <div class="other">
+      <div class="slider">
+        <label for="interval-slider">Generations per Seconds ({{timesPerSeconds}})</label>
+        <input id="interval-slider" type="range" value="{{timesPerSeconds}}" min="1" max="10" step="1"
+               (input)="onIntervalChanged($event)" [disabled]="runStatus">
+      </div>
+      <div class="chkBox">
+        <label class="inline-flex items-center">
+          <input id="show-grid" type="checkbox" class="custom-checkbox" [disabled]="runStatus"
+                 [(ngModel)]="showGrid">
+          <span class="ml-1">Grid</span>
+        </label>
+      </div>
     </div>
   </div>
 
   <div class="grid-component-container">
-    <grid [designEnabled]="designEnabled" [interval]="interval"
+    <grid [designEnabled]="designEnabled" [interval]="interval" [showGrid]="showGrid"
           (onRunStatusChanged)="onRunStatusChanged($event)"></grid>
   </div>
 </div>

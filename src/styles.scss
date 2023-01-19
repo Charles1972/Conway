@@ -76,5 +76,17 @@
 }
 
 .btn-disabled {
-  @apply opacity-50 cursor-not-allowed bg-gray-200 text-gray-500 border-gray-200;
+  @apply opacity-50 cursor-not-allowed bg-gray-200 hover:bg-gray-200 text-gray-500 border-gray-200;
+}
+
+.custom-checkbox {
+  @apply text-blue-500 w-8 h-8 mr-2 focus:ring-blue-400 focus:ring-opacity-50 border border-gray-300 rounded;
+
+  &.disabled {
+    @apply text-gray-500;
+  }
+
+  &.no-label {
+    @apply mr-0;
+  }
 }

@@ -1,8 +1,10 @@
 .grid-container {
   @apply rounded-xl border border-gray-400;
+  @apply overflow-hidden;
 
   canvas {
-    @apply p-2;
-    @apply h-[55vh] sm:h-[75vh];
+    //@apply p-2;
+
+    @apply h-[53vh] sm:h-[73vh];
   }
 }

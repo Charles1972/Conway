@@ -1,4 +1,9 @@
 export interface ICell {
   status: boolean;
-  haveToDie: boolean;
+  // position: IPosition;
+}
+
+export interface IPosition {
+  x: number;
+  y: number;
 }

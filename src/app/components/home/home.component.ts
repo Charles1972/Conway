@@ -10,6 +10,7 @@ import {timeInterval} from "rxjs/operators";
 export class HomeComponent implements OnInit {
   runStatus: boolean = false;
   designEnabled: boolean = false;
+  showGrid: boolean = false;
   timesPerSeconds: number = 4;
   interval = 1000 / this.timesPerSeconds;
 
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
   }
 
   startStop() {
+    this.designEnabled = false;
     this.grid.startStop(!this.runStatus);
   }
 
@@ -32,6 +34,12 @@ export class HomeComponent implements OnInit {
 
   randomize() {
     this.grid.randomizePattern();
+  }
+
+  onIntervalChanged(v: any) {
+    console.log('v', v.target.value)
+    this.timesPerSeconds = v.target.value;
+    this.interval = 1000 / this.timesPerSeconds;
   }
 
   onRunStatusChanged(runStatus: boolean) {
