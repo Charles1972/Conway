@@ -64,10 +64,12 @@ export class GridComponent implements OnInit, OnChanges {
 
     canvas.width = el.offsetWidth;
     canvas.height = el.offsetHeight;
+    //set context where to draw
     this.drawContext = canvas.getContext('2d');
     this.drawContext.lineJoin = "bevel";
     this.drawContext.lineWidth = 1;
 
+    //Set rows and columns based on the component size
     this.rows = Math.floor(el.offsetHeight / this.cellSize);
     this.columns = Math.floor(el.offsetWidth / this.cellSize);
 
@@ -81,7 +83,7 @@ export class GridComponent implements OnInit, OnChanges {
       }
     }
 
-    //Test Code
+    // Oscillators - Toad test code
     // this.cells[3][4].status = true;
     // this.cells[3][5].status = true;
     // this.cells[3][6].status = true;
@@ -110,12 +112,9 @@ export class GridComponent implements OnInit, OnChanges {
     for(let r = 0; r < this.rows; r++) {
       this.cells.push([]);
       for(let c = 0; c < this.columns; c++) {
-        // this.cells[r].push({status: false, position: {x: c * this.cellSize, y: r * this.cellSize}});
         this.cells[r].push({status: false});
       }
     }
-
-    console.log('this.cells', this.cells)
 
     if (drawCells) {
       this.drawCells();
@@ -124,7 +123,6 @@ export class GridComponent implements OnInit, OnChanges {
 
   private setStyles() {
     let canvasContainer = document.getElementById('canvasContainer');
-    console.log('canvasContainer', canvasContainer)
     canvasContainer.style.backgroundColor = this.offColor;
   }
 
@@ -152,9 +150,11 @@ export class GridComponent implements OnInit, OnChanges {
   }
 
   private drawCell(r: number, c: number) {
+    //draw the cell based on its state
     this.drawContext.fillStyle = this.cells[r][c].status ? this.onColor : this.offColor;
     this.drawContext.fillRect(c * this.cellSize, r * this.cellSize, this.cellSize, this.cellSize);
 
+    //draw the border to the cell if showgrid or design is enabled
     if (this.showGrid || this.designEnabled) {
       this.drawContext.strokeStyle = this.designEnabled ? this.gridColorDesign : this.gridColor;
       this.drawContext.strokeRect(c * this.cellSize, r * this.cellSize, this.cellSize, this.cellSize);
@@ -162,6 +162,7 @@ export class GridComponent implements OnInit, OnChanges {
   }
 
   private updateCellsStatus() {
+    //phisical copy of the current array of cells
     this.cellsCopy = JSON.parse(JSON.stringify(this.cells));
 
     for (let r = 0; r < this.rows; r++) {
@@ -170,6 +171,7 @@ export class GridComponent implements OnInit, OnChanges {
       }
     }
 
+    //phisical copy to the current array of cells
     this.cells = JSON.parse(JSON.stringify(this.cellsCopy));
   }
 
@@ -186,6 +188,9 @@ export class GridComponent implements OnInit, OnChanges {
       }
     }
 
+    //Any live cell with two or three neighbors survives.
+    //Any dead cell with three live neighbors becomes a live cell.
+    //All other live cells die in the next generation. Similarly, all other dead cells stay dead.
     cellCopy.status = (cell.status && neighboursCount > 1 && neighboursCount < 4) || (!cell.status && neighboursCount == 3);
   }
 
@@ -198,6 +203,7 @@ export class GridComponent implements OnInit, OnChanges {
   }
 
   canvasMouseUp(event: MouseEvent) {
+    //If design is enabled on mouse up based on the position a cell is drawn or erased
     if (this.designEnabled) {
       let x = event.offsetX;
       let y = event.offsetY;

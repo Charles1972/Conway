@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   @ViewChild(GridComponent) grid: GridComponent;
 
   constructor() {
-    console.log('this.runStatus', this.runStatus)
+    //
   }
 
   ngOnInit(): void {
@@ -37,14 +37,12 @@ export class HomeComponent implements OnInit {
   }
 
   onIntervalChanged(v: any) {
-    console.log('v', v.target.value)
     this.timesPerSeconds = v.target.value;
     this.interval = 1000 / this.timesPerSeconds;
   }
 
   onRunStatusChanged(runStatus: boolean) {
     this.runStatus = runStatus;
-    console.log('this.runStatus', this.runStatus)
   }
 }
 
